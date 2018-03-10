@@ -70,7 +70,6 @@ serialize method so they are inaccessble via our API.
 
 
 
-
 /* --------------------------------------------------------------------------
 
 VOLATILE STORAGE

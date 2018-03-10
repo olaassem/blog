@@ -2,7 +2,7 @@ const express = require('express');
 //Morgan is used for logging request details. 
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+
 
 //Out of the variables.js variables, this points out to each unique variable declared here in the {}
 //const {PORT, SUCCESSMSG, DATABASEURL} = require('./variables');
@@ -32,7 +32,6 @@ db.once('open', function () { console.log('Connected to a database') });
 
 
 
-const jsonParser = bodyParser.json();
 
 
 
