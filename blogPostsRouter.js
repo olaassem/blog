@@ -1,11 +1,19 @@
 
 const express = require('express');
+//const blogModel = require('/models');
+
+//will create router
+//routing middlewares and endpoints
 const router = express.Router();
 
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const {BlogPosts} = require('./models');
+//out of all the models, require just this one
+//"destructuring"
+//also means the same as: const BlogPosts = require('./models').BlogPosts; 
+const {BlogPosts} = require('./models'); 
+
 
 // convenience function for generating lorem text for blog
 // posts we initially add below
