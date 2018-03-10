@@ -1,5 +1,83 @@
+'use strict';
+//WHY ARE WE USING USE STRICT HERE?
+
+//to start, require mongoose
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+
+
+//in the schema, we define the skeleton of the object aka blog
+const blogPostSchema = new mongoose.Schema({
+  author: {
+      firstName: String,
+      lastName: String
+  },
+  title: {type: String, required: true},
+  content: {type: String},
+  created: {type: Date, default: Date.now}
+});
+
+//create the model on the right side of =
+//export something
+//first param is our collection and it will have 
+//to fit the param of the bookSchema that we defined
+module.exports = mongoose.model( "BlogPost", blogPostSchema);
+
+// The above is the same as: 
+/*
+const BlogPost = mongoose.model('BlogPost', blogPostSchema);
+module.exports = {BlogPost}; 
+*/
+
+
+
+
+blogPostSchema.virtual('authorName').get(function() {
+  return `${this.author.firstName} ${this.author.lastName}`.trim();
+});
+  /*
+Virtuals allow us to create derived properties on our model instances.
+
+Recall that according to our schema, author is an object. 
+Let's assume that the clients who will use this API only need a 
+human-readable string representing the full author name. 
+Here, we create a new property (authorName) that will be 
+available on instances of our Blog model. 
+With this virtual property, console.log(myBlog.addressString) 
+might yield Jose Saramago.
+  */
+
+
+
+
+blogPostSchema.methods.serialize = function() {
+  return {
+    id: this._id,
+    author: this.authorName,
+    content: this.content,
+    title: this.title,
+    created: this.created
+  };
+};
+
+/*
+This code gives each instance of our Blog model a serialize method, 
+which lets us specify how blog posts are represented outside of our application 
+via our API. Things like passwords can be left out of the 
+serialize method so they are inaccessble via our API.
+*/
+
+
+
+
+
+/* --------------------------------------------------------------------------
+
+VOLATILE STORAGE
+
 
 const uuid = require('uuid');
+
 
 // This module provides volatile storage, using a `BlogPost`
 // model. We haven't learned about databases yet, so for now
@@ -69,3 +147,5 @@ function createBlogPostsModel() {
 
 
 module.exports = {BlogPosts: createBlogPostsModel()};
+
+*/
